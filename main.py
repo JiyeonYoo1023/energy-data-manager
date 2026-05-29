@@ -19,5 +19,14 @@ try:
 
             records.append(record)
 
+        for record in records:
+            print(record.get_CSDUID(),
+                  record.get_CSD(),
+                  record.get_Period(),
+                  record.get_IndicatorSummaryDescription(),
+                  record.get_UnitOfMeasure(),
+                  record.get_OriginValue()
+                  )            
+
 except FileNotFoundError:
     print("File Not Found")
