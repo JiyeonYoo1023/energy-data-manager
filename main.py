@@ -27,6 +27,51 @@ https://stackoverflow.com/questions/50466932/difference-between-csv-reader-and-r
 [6] GeeksforGeeks. (n.d.). Python Try Except. geeksforgeeks.org. [online]
 Available at: https://www.geeksforgeeks.org/python/python-try-except/ [Accessed on May 29, 2026]
 """
+from persistence.file_handler import load_records, save_records
+from business.energy_service import (
+    create_record,
+    delete_record,
+    update_record,
+    display_one_record,
+    display_all_records
+)
+from presentation.menu import show_menu, get_record_input
 
+print("Author: Jiyeon Yoo")
+
+records = load_records()
+
+while True:
+    choice = show_menu()
+
+    if choice == "1":
+        records = load_records()
+        print("Data reloaded")
+    elif choice == "2":
+        filename = save_records(records)
+
+    elif choice == "3":
+        display_all_records(records)
+    elif choice == "4":
+        index = int(input("Enter index to display: "))
+        display_one_record(records, index)
+    elif choice == "5":
+        csduid, csd, period, indicator, unit, value = get_record_input()
+        create_record(records, csduid, csd, period, indicator, unit, value)
+        print("Record created")
+    elif choice == "6":
+        index = int(input("Enter index to update: "))
+        csduid, csd, period, indicator, unit, value = get_record_input()
+        update_record(records, index, csduid, csd, period, indicator, unit, value)
+        print("Record Updated")
+    elif choice == "7":
+        index = int(input("Enter index to delete: "))
+        delete_record(records, index)
+        print("Record deleted")
+    elif choice == "8":
+        print("Goodbye!")
+        break
+    else:
+        print("Invalid choice")
 
 

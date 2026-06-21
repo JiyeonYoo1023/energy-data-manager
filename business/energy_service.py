@@ -4,6 +4,11 @@ def display_one_record(records, index):
 
     if 0 <= index < len(records):
         record = records[index]
+        print("-" * 150)
+        print(f"{'CSDUID':<25} {'CSD':<34} {'Period':<10}"
+              f"{'IndicatorSummaryDescription':<32}"
+              f"{'UnitOfMeasure':<22} {'OriginValue':<10}")
+        print("-" * 150)
         print(
             f"{record.get_CSDUID():<10}",
             f"{record.get_CSD():<50}",
