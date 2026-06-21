@@ -27,5 +27,10 @@ def update_record(records, index, ...):
     pass
 
 def delete_record(records, index):
-    pass
 
+    if 0 <= index < len(records):
+        removed = records.pop(index)
+        return removed
+    else:
+        print("Invalid index")
+        return None
