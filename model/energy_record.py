@@ -35,18 +35,6 @@ class EnergyRecord:
     Stores energy production data for a given region and period.
     """
 
-    def __init__(self):
-        """
-        Constructor for EnergyRecord.
-        Initializes all fields to None.
-        """
-        self.__CSDUID = None
-        self.__CSD = None
-        self.__Period = None
-        self.__IndicatorSummaryDescription = None
-        self.__UnitOfMeasure = None
-        self.__OriginalValue = None
-
     def get_CSDUID(self):
         """Returns the CSDUID value."""
         return self.__CSDUID
