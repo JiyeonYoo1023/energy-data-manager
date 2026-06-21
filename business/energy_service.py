@@ -23,8 +23,24 @@ def create_record(records,csduid,csd,period,indicator,unit,value):
 
     return new_record
 
-def update_record(records, index, ...):
-    pass
+def update_record(records, index, csduid, csd, period, indicator, unit, value):
+
+    if 0 <= index < len(records):
+        record = records[index]
+
+        record.set_CSDUID(csduid)
+        record.set_CSD(csd)
+        record.set_Period(period)
+        record.set_IndicatorSummaryDescription(indicator)
+        record.set_UnitOfMeasure(unit)
+        record.set_OriginValue(value)
+
+
+        return True
+    else:
+        print("Invalid index")
+        return False
+
 
 def delete_record(records, index):
 
