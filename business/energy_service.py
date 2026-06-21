@@ -2,7 +2,17 @@ from model.energy_record import EnergyRecord
 
 def display_one_record(records, index):
 
-    pass
+    if 0 <= index < len(records):
+        record = records[index]
+        print(
+            f"{record.get_CSDUID():<10}",
+            f"{record.get_CSD():<50}",
+            f"{record.get_Period():<10}",
+            f"{record.get_IndicatorSummaryDescription():<35}",
+            f"{record.get_UnitOfMeasure():<15}",
+            f"{record.get_OriginValue():<10}")
+    else:
+        print("Invalid index")
 
 def display_all_records(records):
 
