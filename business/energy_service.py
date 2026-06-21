@@ -16,7 +16,23 @@ def display_one_record(records, index):
 
 def display_all_records(records):
 
-    pass
+    print("-" * 150)
+    print(f"{'CSDUID':<25} {'CSD':<34} {'Period':<10}"
+          f"{'IndicatorSummaryDescription':<32}"
+          f"{'UnitOfMeasure':<22} {'OriginValue':<10}")
+    print("-" * 150)
+
+    for i, record in enumerate(records):
+        print(
+            f"{record.get_CSDUID():<10}",
+            f"{record.get_CSD():<50}",
+            f"{record.get_Period():<10}",
+            f"{record.get_IndicatorSummaryDescription():<35}",
+            f"{record.get_UnitOfMeasure():<15}",
+            f"{record.get_OriginValue():<10}")
+
+        if (i + 1 ) % 10 == 0:
+            print("Program by Jiyeon Yoo")
 
 def create_record(records,csduid,csd,period,indicator,unit,value):
 
