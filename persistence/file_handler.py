@@ -26,3 +26,27 @@ def load_records(filename="download.csv"):
         print("Error: CSV file not found")
 
     return records
+
+def save_records(records):
+    new_filename = str(uuid.uuid4()) + ".csv"
+
+    with open(new_filename, "w", newline="") as f:
+        writer = csv.writer(f)
+
+        writer.writerow(["CSDUID", "CSD", "Period",
+                         "IndicatorSummaryDescription",
+                         "UnitOfMeasure", "OriginalValue"])
+
+        for record in records:
+            writer.writerow([
+                record.get_CSDUID(),
+                record.get_CSD(),
+                record.get_Period(),
+                record.get_IndicatorSummaryDescription(),
+                record.get_UnitOfMeasure(),
+                record.get_OriginValue()
+            ])
+
+    print(f"Saved to file: {new_filename}")
+
+    return new_filename
