@@ -1,9 +1,42 @@
+"""
+Author: Jiyeon Yoo
+Course: CST8002 040 Programming Language Research Project
+Assignment: Practical Project 02
+Professor: Eric Torunski
+Due Date: Jun 21, 2026
+References:
+
+[1] Python Software Foundation. (n.d.). uuid — UUID objects according to RFC 9562.
+docs.python.org. [online] Available at: https://docs.python.org/3/library/uuid.html
+[Accessed on June 21, 2026]
+
+[2] Python Software Foundation. (n.d.). unittest — Unit testing framework.
+docs.python.org. [online] Available at: https://docs.python.org/3/library/unittest.html
+[Accessed on June 21, 2026]
+
+[3] GeeksforGeeks. (n.d.). Python Unittest Tutorial. geeksforgeeks.org. [online]
+Available at: https://www.geeksforgeeks.org/python/unit-testing-python-unittest/
+[Accessed on June 21, 2026]
+
+"""
+
 import csv
 from model.energy_record import EnergyRecord
 import uuid
 
 
 def load_records(filename="download.csv"):
+    """
+    Opens and reads a CSV file, parsing up to the first 100 rows into
+    EnergyRecord objects. Handles the case where the file is missing.
+
+    Args:
+        filename (str): Name of the CSV file to read. Defaults to "download.csv".
+
+    Returns:
+        list: A list of EnergyRecord objects parsed from the file.
+              Returns an empty list if the file is not found.
+    """
     records = []
     try:
         with open(filename, "r") as f:
@@ -28,6 +61,17 @@ def load_records(filename="download.csv"):
     return records
 
 def save_records(records):
+    """
+    Writes the in-memory list of EnergyRecord objects to a new CSV file.
+    The filename is generated using a UUID to guarantee uniqueness and
+    avoid overwriting previously saved files.
+
+    Args:
+        records (list): The list of EnergyRecord objects to save.
+
+    Returns:
+        str: The generated filename the records were saved to.
+    """
     new_filename = str(uuid.uuid4()) + ".csv"
 
     with open(new_filename, "w", newline="") as f:
