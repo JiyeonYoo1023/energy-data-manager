@@ -27,9 +27,10 @@ from business.energy_service import (
     delete_record,
     update_record,
     display_one_record,
-    display_all_records
+    display_all_records,
+    sort_records
 )
-from presentation.menu import show_menu, get_record_input
+from presentation.menu import show_menu, get_record_input, get_sort_choice
 
 print("Author: Jiyeon Yoo")
 
@@ -63,9 +64,15 @@ while True:
         delete_record(records, index)
         print("Record deleted")
     elif choice == "8":
+        field, reverse = get_sort_choice()
+        if field:
+            records = sort_records(records, field, reverse)
+            print("Records sorted successfully.")
+        else:
+            print("Invalid field selection.")
+    elif choice == "9":
         print("Goodbye!")
         break
     else:
         print("Invalid choice")
-
 
