@@ -36,7 +36,8 @@ def show_menu():
     print("5. Create new record")
     print("6. Update record")
     print("7. Delete record")
-    print("8. Exit")
+    print("8. Sort records")
+    print("9. Exit")
 
     choice = input("Enter number: ")
 
@@ -57,3 +58,36 @@ def get_record_input():
     value = input("Value: ")
 
     return csduid, csd, period, indicator, unit, value
+
+def get_sort_choice():
+    """
+    Prompts the user to choose a field to sort by and a sort direction.
+
+    Returns:
+        tuple: (field, reverse) where field is the column name to sort by
+               and reverse is True for descending order, False for ascending.
+    """
+    print("\nSort by which field?")
+    print("1. CSDUID")
+    print("2. CSD")
+    print("3. Period")
+    print("4. IndicatorSummaryDescription")
+    print("5. UnitOfMeasure")
+    print("6. OriginValue")
+
+    field_map = {
+        "1": "CSDUID",
+        "2": "CSD",
+        "3": "Period",
+        "4": "IndicatorSummaryDescription",
+        "5": "UnitOfMeasure",
+        "6": "OriginValue",
+    }
+
+    choice = input("Enter number: ")
+    field = field_map.get(choice)
+
+    order = input("Ascending or Descending? (a/d): ").strip().lower()
+    reverse = (order == "d")
+
+    return field, reverse
