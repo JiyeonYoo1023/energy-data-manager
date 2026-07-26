@@ -21,26 +21,25 @@ Available at: https://www.geeksforgeeks.org/python/unit-testing-python-unittest/
 """
 
 import unittest
-from business.energy_service import create_record
+from business.energy_service import sort_records, create_record
 
-class TestCreateRecord(unittest.TestCase):
+class TestSortRecords(unittest.TestCase):
     """
-    Unit tests for the create_record function in the business layer.
+    Unit tests for the sort_records function in the business layer.
     """
 
-    def test_create_record_adds_to_list(self):
+    def test_sort_by_origin_value_ascending(self):
         """
-        Verifies that calling create_record adds exactly one new
-        EnergyRecord to the in-memory list, and that the record's
-        CSDUID field matches the value that was passed in.
+        Verifies that sorting by OriginValue in ascending order
+        correctly orders records from smallest to largest value.
         """
         records = []
+        create_record(records, "1", "A", "2024Q1", "Energy use", "kwh", "300")
+        create_record(records, "2", "B", "2024Q1", "Energy use", "kwh", "100")
+        create_record(records, "3", "C", "2024Q1", "Energy use", "kwh", "200")
 
-        create_record(records, "1234", "Ottawa", "2024Q1",
-                      "Energy use", "kwh", "100")
+        sorted_records = sort_records(records, "OriginValue", reverse=False)
 
-        self.assertEqual(1, len(records))
-        self.assertEqual(records[0].get_CSDUID(), "1234")
-
-if __name__ == "__main__":
-    unittest.main()
+        self.assertEqual(sorted_records[0].get_OriginValue(), "100")
+        self.assertEqual(sorted_records[1].get_OriginValue(), "200")
+        self.assertEqual(sorted_records[2].get_OriginValue(), "300")
