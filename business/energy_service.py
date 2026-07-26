@@ -154,3 +154,32 @@ def delete_record(records, index):
     else:
         print("Invalid index")
         return None
+
+def sort_records(records, field, reverse=False):
+    """
+    Sorts the in-memory list of EnergyRecord objects by the given field.
+
+    Args:
+        records (list): The list of EnergyRecord objects to sort.
+        field (str): The name of the field to sort by (e.g. "Period").
+        reverse (bool): If True, sorts in descending order. Defaults to False.
+
+    Returns:
+        list: A new list containing the records sorted by the given field.
+    """
+    getters = {
+        "CSDUID": lambda r: r.get_CSDUID(),
+        "CSD": lambda r: r.get_CSD(),
+        "Period": lambda r: r.get_Period(),
+        "IndicatorSummaryDescription": lambda r: r.get_IndicatorSummaryDescription(),
+        "UnitOfMeasure": lambda r: r.get_UnitOfMeasure(),
+        "OriginValue": lambda r: float(r.get_OriginValue()) if r.get_OriginValue() not in (None, "") else 0.0,
+    }
+
+    key_func = getters.get(field)
+
+    if key_func is None:
+        print(f"Invalid field: {field}")
+        return records
+
+    return sorted(records, key=key_func, reverse=reverse)
