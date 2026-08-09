@@ -37,9 +37,10 @@ from business.energy_service import (
     update_record,
     display_one_record,
     display_all_records,
-    sort_records
+    sort_records,
+    filter_records
 )
-from presentation.menu import show_menu, get_record_input, get_sort_choice
+from presentation.menu import show_menu, get_record_input, get_sort_choice, get_filter_choice
 
 print("Author: Jiyeon Yoo")
 
@@ -80,6 +81,14 @@ while True:
         else:
             print("Invalid field selection.")
     elif choice == "9":
+            filters = get_filter_choice()
+            if filters:
+                filtered = filter_records(records, filters)
+                print(f"\n{len(filtered)} record(s) matched your filter:")
+                display_all_records(filtered)
+            else:
+                print("No filter fields selected.")
+    elif choice == "10":
         print("Goodbye!")
         break
     else:
