@@ -46,7 +46,8 @@ def show_menu():
     print("6. Update record")
     print("7. Delete record")
     print("8. Sort records")
-    print("9. Exit")
+    print("9. Filter records")
+    print("10. Exit")
 
     choice = input("Enter number: ")
 
@@ -100,3 +101,46 @@ def get_sort_choice():
     reverse = (order == "d")
 
     return field, reverse
+
+def get_filter_choice():
+    """
+    Prompts the user to build a set of multi-column filter criteria.
+    The user may choose one or more fields and enter a search value for
+    each; only records matching ALL entered values will be kept.
+
+    Returns:
+        dict: Mapping of field name to the search value entered by the
+              user, e.g. {"CSD": "Ottawa", "Period": "2020"}. Empty if
+              the user selects no fields.
+    """
+    field_map = {
+        "1": "CSDUID",
+        "2": "CSD",
+        "3": "Period",
+        "4": "IndicatorSummaryDescription",
+        "5": "UnitOfMeasure",
+        "6": "OriginValue",
+    }
+
+    filters = {}
+
+    print("\nBuild your filter (choose as many fields as you like).")
+    for key, field in field_map.items():
+        print(f"{key}. {field}")
+    print("Enter 0 when you are done adding fields.")
+
+    while True:
+        choice = input("Enter field number to add (0 to finish): ").strip()
+
+        if choice == "0":
+            break
+
+        field = field_map.get(choice)
+        if field is None:
+            print("Invalid field number.")
+            continue
+
+        value = input(f"Value to search for in {field}: ").strip()
+        filters[field] = value
+
+    return filters
