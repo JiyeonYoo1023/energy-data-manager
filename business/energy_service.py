@@ -1,9 +1,9 @@
 """
 Author: Jiyeon Yoo
 Course: CST8002 040 Programming Language Research Project
-Assignment: Practical Project 02
+Assignment: Practical Project 03
 Professor: Eric Torunski
-Due Date: Jun 21, 2026
+Due Date: Jul 21, 2026
 References:
 
 [1] Python Software Foundation. (n.d.). uuid — UUID objects according to RFC 9562.
@@ -17,6 +17,15 @@ docs.python.org. [online] Available at: https://docs.python.org/3/library/unitte
 [3] GeeksforGeeks. (n.d.). Python Unittest Tutorial. geeksforgeeks.org. [online]
 Available at: https://www.geeksforgeeks.org/python/unit-testing-python-unittest/
 [Accessed on June 21, 2026]
+
+[4] Python Software Foundation. (n.d.). Sorting Techniques. docs.python.org.
+[online] Available at: https://docs.python.org/3/howto/sorting.html
+[Accessed on Jul 26, 2026]
+
+[5] Python Software Foundation. (n.d.). Built-in Functions — sorted().
+docs.python.org. [online] Available at:
+https://docs.python.org/3/library/functions.html#sorted
+[Accessed on Jul 26, 2026]
 
 """
 
@@ -183,3 +192,44 @@ def sort_records(records, field, reverse=False):
         return records
 
     return sorted(records, key=key_func, reverse=reverse)
+
+def filter_records(records, filters):
+    """
+    Filters the in-memory list of EnergyRecord objects by multiple
+    field criteria at once (partial, case-insensitive match).
+
+    Args:
+        records (list): The list of EnergyRecord objects to filter.
+        filters (dict): Mapping of field name to the search value,
+                         e.g. {"CSD": "Ottawa", "Period": "2020"}.
+
+    Returns:
+        list: A new list containing only the records that match
+              ALL given filter criteria.
+    """
+    getters = {
+        "CSDUID": lambda r: r.get_CSDUID(),
+        "CSD": lambda r: r.get_CSD(),
+        "Period": lambda r: r.get_Period(),
+        "IndicatorSummaryDescription": lambda r: r.get_IndicatorSummaryDescription(),
+        "UnitOfMeasure": lambda r: r.get_UnitOfMeasure(),
+        "OriginValue": lambda r: r.get_OriginValue(),
+    }
+
+    result = []
+    for record in records:
+        match = True
+        for field, search_value in filters.items():
+            getter = getters.get(field)
+            if getter is None:
+                print(f"Invalid field: {field}")
+                return records
+
+            record_value = str(getter(record)).lower()
+            if search_value.lower() not in record_value:
+                match = False
+                break
+        if match:
+            result.append(record)
+
+    return result
